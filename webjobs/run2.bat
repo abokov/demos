@@ -5,8 +5,10 @@ echo Running script... >> %LOG%
 date /T >> %LOG%
 time /T >> %LOG%
 REM we can run some EXE here and save status in RESULT
+
 set RESULT=%ERRORLEVEL%
 echo Result code is %RESULT%
+echo Result code is %RESULT%  > %LOG%
  
 rem Dumping session log to Azure log (standard output) when it exists
 if exist %LOG% (
