@@ -1,0 +1,37 @@
+#
+# check_log.ps1
+#
+
+# check logs for specific ip address and then send alert about that to email
+
+email = "abokov@microsoft.com"
+
+
+#Get-Content ".\*log" | ? { ($_ | Select-String "192.168.0.23") -and ($_ | Select-String "Useralias")}  
+
+#RESULT=select-string -path c:\logs\*.txt -pattern "192\.168\.0\.23(.)*207\.68\.172\.246" –allmatches
+
+
+
+
+$LogFolder = "C:\inetpub\logs\LogFiles\W3SVC123"
+$LogFiles = [System.IO.Directory]::GetFiles($LogFolder, "*.log")
+$LogTemp = "C:\inetpub\logs\LogFiles\W3SVC123\AllLogs.tmp"
+
+# Logs will store each line of the log files in an array
+$Logs = @()
+# Skip the comment lines
+$LogFiles | % { Get-Content $_ | where {$_ -notLike "#[D,F,S,V]*" } | % { $Logs += $_ } }
+# Then grab the first header line, and adjust its format for later
+$LogColumns = ( $LogFiles | select -first 1 | % { Get-Content $_ | where {$_ -Like "#[F]*" } } ) `
+              -replace "#Fields: ", "" -replace "-","" -replace "\(","" -replace "\)",""
+
+# Temporarily, store the reformatted logs
+Set-Content -LiteralPath $LogTemp -Value ( [System.String]::Format("{0}{1}{2}", $LogColumns, [Environment]::NewLine, ( [System.String]::Join( [Environment]::NewLine, $Logs) ) ) )
+
+# Read the reformatted logs as a CSV file
+$Logs = Import-Csv -Path $LogTemp -Delimiter " "
+
+
+# Sample query : Select all unique users
+$Logs | select -Unique csusername
