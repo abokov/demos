@@ -1,0 +1,1 @@
+C:\tools\github\abokov\demos\WebJobs-demoKit\Azure- WebJob - logchecker\Azure- WebJob - logchecker\bin\Debug\Azure- WebJob - logchecker.exe.config

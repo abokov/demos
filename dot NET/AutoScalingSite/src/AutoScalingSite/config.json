@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "SiteTitle": "AutoScalingSite"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-AutoScalingSite-700343ab-ba7b-49e6-a636-9f959f15e1b7;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}
